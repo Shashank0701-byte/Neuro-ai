@@ -18,9 +18,9 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
+            <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
             <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
             <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</a>
-            <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
             <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
             <button className="btn-primary">Get Started</button>
           </nav>
@@ -40,9 +40,9 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4">
+              <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
               <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
               <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</a>
-              <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
               <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
               <button className="btn-primary w-full">Get Started</button>
             </nav>
