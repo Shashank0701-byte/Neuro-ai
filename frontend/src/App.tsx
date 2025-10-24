@@ -4,6 +4,7 @@ import ProblemGoal from './components/ProblemGoal'
 import About from './components/About'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
+import TechnicalPipeline from './components/TechnicalPipeline'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <About />
         <Features />
         <HowItWorks />
+        <TechnicalPipeline />
         <CTA />
       </main>
       <Footer />

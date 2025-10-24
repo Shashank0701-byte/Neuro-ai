@@ -21,6 +21,7 @@ const Header = () => {
             <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
             <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
             <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</a>
+            <a href="#technical-pipeline" className="text-gray-600 hover:text-primary-600 transition-colors">Technology</a>
             <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
             <button className="btn-primary">Get Started</button>
           </nav>
@@ -43,6 +44,7 @@ const Header = () => {
               <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
               <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
               <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</a>
+              <a href="#technical-pipeline" className="text-gray-600 hover:text-primary-600 transition-colors">Technology</a>
               <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
               <button className="btn-primary w-full">Get Started</button>
             </nav>
