@@ -1,10 +1,11 @@
 # NeuroAid Backend API
 
-A robust Node.js/Express backend API for managing dynamic content in the NeuroAid application, with a focus on the "How It Works" section content management system.
+A robust Node.js/Express backend API for managing dynamic content in the NeuroAid application, including "How It Works" section and Technical Pipeline visualization.
 
 ## 🚀 Features
 
 - **Dynamic Content Management**: Full CRUD operations for "How It Works" section
+- **Technical Pipeline API**: Comprehensive API for pipeline module metadata and visualization
 - **Admin Authentication**: JWT-based authentication with role-based access control
 - **Rate Limiting**: Protection against abuse with configurable limits
 - **Data Validation**: Comprehensive input validation using Joi
@@ -192,6 +193,59 @@ Update validation content (Admin only).
 
 #### GET `/how-it-works/metadata`
 Get metadata information (Admin only).
+
+### Technical Pipeline Endpoints
+
+#### GET `/technical-pipeline`
+Get complete technical pipeline with all modules, data flow, and performance metrics.
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "overview": {
+      "title": "NeuroAid Technical Pipeline",
+      "totalModules": 8,
+      "averageProcessingTime": "90-120 seconds",
+      ...
+    },
+    "modules": [ ... ],
+    "dataFlow": { ... },
+    "performance": { ... }
+  },
+  "metadata": { ... }
+}
+```
+
+#### GET `/technical-pipeline/modules`
+Get all 8 pipeline modules.
+
+#### GET `/technical-pipeline/modules/:id`
+Get specific module by ID (e.g., `ml-inference`, `data-collection`).
+
+#### GET `/technical-pipeline/modules/category/:category`
+Get modules by category (Input, Processing, Analysis, Prediction, Output, Infrastructure).
+
+#### GET `/technical-pipeline/categories`
+Get list of all categories with module counts.
+
+#### GET `/technical-pipeline/data-flow`
+Get information about data flow through the pipeline.
+
+#### GET `/technical-pipeline/performance`
+Get overall pipeline performance metrics.
+
+#### PUT `/technical-pipeline/modules/:id`
+Update specific module (Admin only).
+
+#### POST `/technical-pipeline/modules`
+Add new module (Admin only).
+
+#### DELETE `/technical-pipeline/modules/:id`
+Delete specific module (Admin only).
+
+**📚 Full Technical Pipeline API Documentation**: See `TECHNICAL_PIPELINE_API.md` and `TECHNICAL_PIPELINE_README.md`
 
 ## 🔒 Security Features
 

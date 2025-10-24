@@ -68,6 +68,42 @@ const adminLoginSchema = Joi.object({
   password: Joi.string().min(6).max(100).required()
 });
 
+// Technical Pipeline Module schema
+const moduleSchema = Joi.object({
+  id: Joi.string().min(1).max(50).required(),
+  name: Joi.string().min(1).max(100).required(),
+  category: Joi.string().valid('Input', 'Processing', 'Analysis', 'Prediction', 'Output', 'Infrastructure').required(),
+  order: Joi.number().integer().min(1).required(),
+  description: Joi.string().min(1).max(500).required(),
+  icon: Joi.string().required(),
+  color: Joi.string().pattern(/^from-\w+-\d+\s+to-\w+-\d+$/).required(),
+  bgColor: Joi.string().pattern(/^bg-\w+-\d+$/).required(),
+  borderColor: Joi.string().pattern(/^border-\w+-\d+$/).required(),
+  processingTime: Joi.string().min(1).max(50).required(),
+  technologies: Joi.array().items(Joi.string().min(1).max(200)).min(1).required(),
+  inputs: Joi.array().items(Joi.object()).min(0).required(),
+  outputs: Joi.array().items(Joi.object()).min(0).required(),
+  performance: Joi.object().optional()
+});
+
+// Technical Pipeline overview schema
+const pipelineOverviewSchema = Joi.object({
+  title: Joi.string().min(1).max(100).required(),
+  description: Joi.string().min(1).max(500).required(),
+  totalModules: Joi.number().integer().min(1).required(),
+  averageProcessingTime: Joi.string().min(1).max(50).required(),
+  architecture: Joi.string().min(1).max(200).required(),
+  scalability: Joi.string().min(1).max(200).required()
+});
+
+// Full Technical Pipeline schema
+const technicalPipelineSchema = Joi.object({
+  overview: pipelineOverviewSchema.required(),
+  modules: Joi.array().items(moduleSchema).min(1).required(),
+  dataFlow: Joi.object().required(),
+  performance: Joi.object().required()
+});
+
 // Validate request body
 const validateBody = (schema) => {
   return (req, res, next) => {
@@ -99,6 +135,9 @@ module.exports = {
   validationSectionSchema,
   howItWorksSchema,
   adminLoginSchema,
+  moduleSchema,
+  pipelineOverviewSchema,
+  technicalPipelineSchema,
   validateBody,
   validateQuery
 };

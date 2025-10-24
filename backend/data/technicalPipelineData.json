@@ -1,0 +1,660 @@
+{
+  "overview": {
+    "title": "NeuroAid Technical Pipeline",
+    "description": "End-to-end AI-powered cognitive assessment pipeline from data collection to risk score generation",
+    "totalModules": 8,
+    "averageProcessingTime": "90-120 seconds",
+    "architecture": "Microservices-based with RESTful APIs",
+    "scalability": "Horizontally scalable, supports 10,000+ concurrent assessments"
+  },
+  "modules": [
+    {
+      "id": "data-collection",
+      "name": "Data Collection Module",
+      "category": "Input",
+      "order": 1,
+      "description": "Captures user speech and text input through secure, browser-based interfaces",
+      "icon": "Database",
+      "color": "from-blue-500 to-blue-600",
+      "bgColor": "bg-blue-50",
+      "borderColor": "border-blue-200",
+      "processingTime": "5-10 seconds",
+      "technologies": [
+        "WebRTC for audio capture",
+        "Web Audio API for real-time processing",
+        "React-based UI components",
+        "Secure WebSocket connections"
+      ],
+      "inputs": [
+        {
+          "type": "Audio",
+          "format": "WAV, 16kHz, mono",
+          "maxDuration": "5 minutes",
+          "compression": "FLAC lossless"
+        },
+        {
+          "type": "Text",
+          "format": "UTF-8 encoded strings",
+          "maxLength": "5000 characters",
+          "sanitization": "XSS protection enabled"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Raw audio files",
+          "storage": "Encrypted S3 buckets"
+        },
+        {
+          "type": "Text transcripts",
+          "storage": "PostgreSQL database"
+        }
+      ],
+      "security": [
+        "End-to-end encryption (AES-256)",
+        "HIPAA-compliant data handling",
+        "No client-side storage of sensitive data",
+        "Automatic data anonymization"
+      ],
+      "performance": {
+        "throughput": "500 concurrent users",
+        "latency": "< 100ms response time",
+        "reliability": "99.9% uptime"
+      }
+    },
+    {
+      "id": "audio-preprocessing",
+      "name": "Audio Preprocessing",
+      "category": "Processing",
+      "order": 2,
+      "description": "Cleans and normalizes audio data, removes noise, and extracts acoustic features",
+      "icon": "Waveform",
+      "color": "from-purple-500 to-purple-600",
+      "bgColor": "bg-purple-50",
+      "borderColor": "border-purple-200",
+      "processingTime": "10-15 seconds",
+      "technologies": [
+        "Librosa (Python audio library)",
+        "PyDub for audio manipulation",
+        "FFmpeg for format conversion",
+        "NumPy for numerical processing"
+      ],
+      "inputs": [
+        {
+          "type": "Raw audio files",
+          "format": "WAV, FLAC",
+          "source": "Data Collection Module"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Cleaned audio",
+          "format": "Normalized WAV"
+        },
+        {
+          "type": "Acoustic features",
+          "count": "50+ features",
+          "features": [
+            "Pitch (F0) contours",
+            "Speech rate (syllables/second)",
+            "Pause duration and frequency",
+            "Voice quality metrics (jitter, shimmer)",
+            "Energy and intensity patterns",
+            "Spectral features (MFCCs)"
+          ]
+        }
+      ],
+      "algorithms": [
+        "Noise reduction using spectral gating",
+        "Voice activity detection (VAD)",
+        "Pitch tracking with PYIN algorithm",
+        "Mel-frequency cepstral coefficients (MFCCs)",
+        "Formant extraction"
+      ],
+      "performance": {
+        "throughput": "100 files/minute",
+        "cpuUsage": "60-70% per core",
+        "memoryUsage": "2-4 GB per instance"
+      }
+    },
+    {
+      "id": "speech-to-text",
+      "name": "Speech-to-Text Transcription",
+      "category": "Processing",
+      "order": 3,
+      "description": "Converts speech audio to text using state-of-the-art ASR models",
+      "icon": "MessageSquare",
+      "color": "from-pink-500 to-pink-600",
+      "bgColor": "bg-pink-50",
+      "borderColor": "border-pink-200",
+      "processingTime": "5-8 seconds",
+      "technologies": [
+        "Whisper (OpenAI ASR model)",
+        "Google Cloud Speech-to-Text API",
+        "Custom fine-tuned models",
+        "Language detection algorithms"
+      ],
+      "inputs": [
+        {
+          "type": "Cleaned audio",
+          "format": "WAV, 16kHz",
+          "source": "Audio Preprocessing"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Text transcripts",
+          "format": "JSON with timestamps"
+        },
+        {
+          "type": "Confidence scores",
+          "range": "0-1 per word"
+        },
+        {
+          "type": "Disfluency markers",
+          "examples": ["um", "uh", "repetitions", "false starts"]
+        }
+      ],
+      "models": [
+        {
+          "name": "Whisper Large-v3",
+          "accuracy": "95% WER on clean speech",
+          "languages": "99 languages supported"
+        },
+        {
+          "name": "Custom medical vocabulary model",
+          "accuracy": "98% on domain-specific terms",
+          "training": "Fine-tuned on 10,000 hours of medical speech"
+        }
+      ],
+      "performance": {
+        "throughput": "Real-time (1x speed)",
+        "latency": "< 2 seconds for 1-minute audio",
+        "gpuUsage": "NVIDIA T4 or equivalent"
+      }
+    },
+    {
+      "id": "nlp-analysis",
+      "name": "Natural Language Processing",
+      "category": "Analysis",
+      "order": 4,
+      "description": "Analyzes linguistic patterns, semantic coherence, and cognitive markers in text",
+      "icon": "Brain",
+      "color": "from-indigo-500 to-indigo-600",
+      "bgColor": "bg-indigo-50",
+      "borderColor": "border-indigo-200",
+      "processingTime": "15-20 seconds",
+      "technologies": [
+        "Transformers (Hugging Face)",
+        "spaCy for NLP pipelines",
+        "NLTK for linguistic analysis",
+        "Custom BERT models"
+      ],
+      "inputs": [
+        {
+          "type": "Text transcripts",
+          "source": "Speech-to-Text + User text input"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Linguistic features",
+          "count": "150+ features",
+          "categories": [
+            "Lexical diversity (TTR, MTLD)",
+            "Syntactic complexity (parse tree depth)",
+            "Semantic coherence (LSA, word embeddings)",
+            "Part-of-speech distributions",
+            "Named entity recognition",
+            "Sentiment and emotion markers"
+          ]
+        },
+        {
+          "type": "Cognitive markers",
+          "examples": [
+            "Word-finding difficulties",
+            "Semantic paraphasias",
+            "Tangential speech",
+            "Loss of topic maintenance",
+            "Reduced information content"
+          ]
+        }
+      ],
+      "models": [
+        {
+          "name": "BioClinicalBERT",
+          "purpose": "Medical text understanding",
+          "parameters": "110M"
+        },
+        {
+          "name": "Custom cognitive decline detector",
+          "purpose": "Identify subtle language changes",
+          "training": "50,000 annotated transcripts"
+        }
+      ],
+      "algorithms": [
+        "Dependency parsing for syntax analysis",
+        "Word2Vec embeddings for semantic similarity",
+        "Topic modeling (LDA) for coherence",
+        "Propositional idea density calculation",
+        "Automated readability indices"
+      ],
+      "performance": {
+        "throughput": "200 documents/minute",
+        "cpuUsage": "80% per core",
+        "memoryUsage": "8-12 GB per instance"
+      }
+    },
+    {
+      "id": "feature-extraction",
+      "name": "Feature Extraction & Engineering",
+      "category": "Analysis",
+      "order": 5,
+      "description": "Combines acoustic and linguistic features into unified feature vectors",
+      "icon": "Sparkles",
+      "color": "from-cyan-500 to-cyan-600",
+      "bgColor": "bg-cyan-50",
+      "borderColor": "border-cyan-200",
+      "processingTime": "5-8 seconds",
+      "technologies": [
+        "Scikit-learn for feature engineering",
+        "Pandas for data manipulation",
+        "Feature-engine library",
+        "Custom feature selectors"
+      ],
+      "inputs": [
+        {
+          "type": "Acoustic features",
+          "count": "50+",
+          "source": "Audio Preprocessing"
+        },
+        {
+          "type": "Linguistic features",
+          "count": "150+",
+          "source": "NLP Analysis"
+        },
+        {
+          "type": "User metadata",
+          "fields": ["age", "education", "language", "demographics"]
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Unified feature vector",
+          "dimensions": "200+",
+          "format": "Normalized numpy array"
+        },
+        {
+          "type": "Feature importance scores",
+          "method": "SHAP values"
+        }
+      ],
+      "featureEngineering": [
+        "Normalization (z-score, min-max)",
+        "Age-based feature scaling",
+        "Interaction features (acoustic × linguistic)",
+        "Polynomial features for non-linear patterns",
+        "Dimensionality reduction (PCA, UMAP)",
+        "Feature selection (mutual information)"
+      ],
+      "qualityControl": [
+        "Missing value imputation",
+        "Outlier detection and handling",
+        "Feature correlation analysis",
+        "Data validation checks"
+      ],
+      "performance": {
+        "throughput": "500 feature sets/minute",
+        "cpuUsage": "40% per core",
+        "memoryUsage": "1-2 GB per instance"
+      }
+    },
+    {
+      "id": "ml-inference",
+      "name": "Machine Learning Inference",
+      "category": "Prediction",
+      "order": 6,
+      "description": "Applies ensemble of ML models to predict cognitive risk scores",
+      "icon": "Cpu",
+      "color": "from-green-500 to-green-600",
+      "bgColor": "bg-green-50",
+      "borderColor": "border-green-200",
+      "processingTime": "10-15 seconds",
+      "technologies": [
+        "TensorFlow 2.x",
+        "PyTorch",
+        "XGBoost",
+        "LightGBM",
+        "ONNX Runtime for optimization"
+      ],
+      "inputs": [
+        {
+          "type": "Feature vectors",
+          "dimensions": "200+",
+          "source": "Feature Extraction"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Risk scores",
+          "domains": [
+            "Overall cognitive risk (0-100)",
+            "Memory score",
+            "Language score",
+            "Attention score",
+            "Executive function score"
+          ]
+        },
+        {
+          "type": "Confidence intervals",
+          "format": "95% CI for each score"
+        },
+        {
+          "type": "Feature attributions",
+          "method": "SHAP explanations"
+        }
+      ],
+      "models": [
+        {
+          "name": "Deep Neural Network",
+          "architecture": "5-layer feedforward",
+          "parameters": "2.5M",
+          "accuracy": "87% sensitivity, 92% specificity",
+          "weight": "40%"
+        },
+        {
+          "name": "Gradient Boosting (XGBoost)",
+          "trees": "500",
+          "depth": "6",
+          "accuracy": "85% sensitivity, 90% specificity",
+          "weight": "30%"
+        },
+        {
+          "name": "Random Forest",
+          "trees": "1000",
+          "accuracy": "83% sensitivity, 88% specificity",
+          "weight": "20%"
+        },
+        {
+          "name": "Support Vector Machine",
+          "kernel": "RBF",
+          "accuracy": "81% sensitivity, 87% specificity",
+          "weight": "10%"
+        }
+      ],
+      "ensemble": {
+        "method": "Weighted voting",
+        "calibration": "Platt scaling",
+        "uncertainty": "Monte Carlo dropout"
+      },
+      "validation": {
+        "crossValidation": "10-fold stratified",
+        "testSet": "15,000 held-out samples",
+        "externalValidation": "3 independent cohorts"
+      },
+      "performance": {
+        "throughput": "1000 predictions/second",
+        "latency": "< 50ms per prediction",
+        "gpuUsage": "NVIDIA T4 or CPU-only option"
+      }
+    },
+    {
+      "id": "result-generation",
+      "name": "Result Generation & Interpretation",
+      "category": "Output",
+      "order": 7,
+      "description": "Generates comprehensive reports with scores, insights, and recommendations",
+      "icon": "FileText",
+      "color": "from-amber-500 to-amber-600",
+      "bgColor": "bg-amber-50",
+      "borderColor": "border-amber-200",
+      "processingTime": "5-10 seconds",
+      "technologies": [
+        "ReportLab for PDF generation",
+        "Jinja2 templating",
+        "Matplotlib for visualizations",
+        "Natural language generation (NLG)"
+      ],
+      "inputs": [
+        {
+          "type": "Risk scores",
+          "source": "ML Inference"
+        },
+        {
+          "type": "Feature attributions",
+          "source": "ML Inference"
+        },
+        {
+          "type": "User profile",
+          "source": "Data Collection"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "JSON report",
+          "fields": [
+            "Overall risk score",
+            "Domain-specific scores",
+            "Confidence intervals",
+            "Key findings",
+            "Recommendations",
+            "Comparison to normative data"
+          ]
+        },
+        {
+          "type": "PDF report",
+          "pages": "3-5",
+          "sections": [
+            "Executive summary",
+            "Detailed scores with visualizations",
+            "Interpretation guide",
+            "Next steps and resources"
+          ]
+        },
+        {
+          "type": "Visualization data",
+          "charts": [
+            "Radar chart of cognitive domains",
+            "Percentile comparison",
+            "Confidence interval plots",
+            "Feature importance bar chart"
+          ]
+        }
+      ],
+      "interpretation": {
+        "riskCategories": [
+          {
+            "range": "0-30",
+            "label": "Low risk",
+            "color": "green",
+            "recommendation": "Continue healthy lifestyle"
+          },
+          {
+            "range": "31-60",
+            "label": "Moderate risk",
+            "color": "yellow",
+            "recommendation": "Consider lifestyle modifications"
+          },
+          {
+            "range": "61-100",
+            "label": "High risk",
+            "color": "red",
+            "recommendation": "Consult healthcare provider"
+          }
+        ],
+        "nlgTemplates": "Context-aware text generation",
+        "personalization": "Age, education, language-specific"
+      },
+      "performance": {
+        "throughput": "200 reports/minute",
+        "pdfGeneration": "< 2 seconds",
+        "cpuUsage": "50% per core"
+      }
+    },
+    {
+      "id": "data-storage",
+      "name": "Secure Data Storage & Retrieval",
+      "category": "Infrastructure",
+      "order": 8,
+      "description": "Stores all assessment data securely with HIPAA compliance and enables longitudinal tracking",
+      "icon": "Shield",
+      "color": "from-red-500 to-red-600",
+      "bgColor": "bg-red-50",
+      "borderColor": "border-red-200",
+      "processingTime": "2-5 seconds",
+      "technologies": [
+        "PostgreSQL for structured data",
+        "MongoDB for unstructured data",
+        "Redis for caching",
+        "AWS S3 for file storage",
+        "Elasticsearch for search"
+      ],
+      "inputs": [
+        {
+          "type": "All pipeline outputs",
+          "source": "All modules"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "Stored records",
+          "retention": "7 years (HIPAA requirement)"
+        },
+        {
+          "type": "Longitudinal data",
+          "tracking": "Multiple assessments per user"
+        },
+        {
+          "type": "Analytics data",
+          "aggregation": "Anonymized population statistics"
+        }
+      ],
+      "security": [
+        "AES-256 encryption at rest",
+        "TLS 1.3 encryption in transit",
+        "Role-based access control (RBAC)",
+        "Audit logging of all access",
+        "Automatic data anonymization",
+        "HIPAA and GDPR compliance",
+        "Regular security audits",
+        "Disaster recovery and backups"
+      ],
+      "dataManagement": [
+        "Automated backups (hourly incremental, daily full)",
+        "Point-in-time recovery",
+        "Data versioning",
+        "Soft deletes with retention policy",
+        "Data export capabilities (JSON, CSV, PDF)"
+      ],
+      "performance": {
+        "throughput": "10,000 writes/second",
+        "queryLatency": "< 100ms for 99th percentile",
+        "storage": "Scalable to petabytes",
+        "availability": "99.99% uptime SLA"
+      }
+    }
+  ],
+  "dataFlow": {
+    "description": "Sequential data flow through the pipeline with parallel processing where possible",
+    "stages": [
+      {
+        "stage": 1,
+        "modules": ["data-collection"],
+        "parallel": false,
+        "description": "User provides speech and text input"
+      },
+      {
+        "stage": 2,
+        "modules": ["audio-preprocessing", "speech-to-text"],
+        "parallel": true,
+        "description": "Audio is preprocessed while being transcribed"
+      },
+      {
+        "stage": 3,
+        "modules": ["nlp-analysis"],
+        "parallel": false,
+        "description": "Text analysis on transcripts and user text"
+      },
+      {
+        "stage": 4,
+        "modules": ["feature-extraction"],
+        "parallel": false,
+        "description": "Combine all features into unified vectors"
+      },
+      {
+        "stage": 5,
+        "modules": ["ml-inference"],
+        "parallel": false,
+        "description": "Ensemble models generate predictions"
+      },
+      {
+        "stage": 6,
+        "modules": ["result-generation", "data-storage"],
+        "parallel": true,
+        "description": "Generate reports while storing data"
+      }
+    ],
+    "totalStages": 6,
+    "parallelizationPoints": 2,
+    "bottlenecks": [
+      {
+        "module": "nlp-analysis",
+        "reason": "Most computationally intensive",
+        "mitigation": "Horizontal scaling with load balancer"
+      }
+    ]
+  },
+  "performance": {
+    "overall": {
+      "averageProcessingTime": "90-120 seconds",
+      "p95ProcessingTime": "150 seconds",
+      "p99ProcessingTime": "180 seconds",
+      "throughput": "500 concurrent assessments",
+      "successRate": "99.7%"
+    },
+    "infrastructure": {
+      "architecture": "Microservices on Kubernetes",
+      "cloudProvider": "AWS",
+      "regions": ["us-east-1", "eu-west-1", "ap-southeast-1"],
+      "autoscaling": "CPU-based (target 70% utilization)",
+      "loadBalancing": "Application Load Balancer with health checks"
+    },
+    "monitoring": {
+      "tools": ["Prometheus", "Grafana", "CloudWatch", "Sentry"],
+      "metrics": [
+        "Request latency",
+        "Error rates",
+        "Model accuracy",
+        "Resource utilization",
+        "User satisfaction scores"
+      ],
+      "alerts": [
+        "High error rate (> 1%)",
+        "Slow response time (> 200s)",
+        "Model drift detection",
+        "Infrastructure failures"
+      ]
+    },
+    "optimization": {
+      "caching": "Redis for frequently accessed data",
+      "cdnUsage": "CloudFront for static assets",
+      "databaseIndexing": "Optimized queries with proper indexes",
+      "modelOptimization": "ONNX runtime for 2x speedup",
+      "batchProcessing": "Queue-based for non-urgent tasks"
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-10-24T16:30:00Z",
+    "updatedBy": "system",
+    "dataSource": "NeuroAid Technical Team",
+    "apiVersion": "v1",
+    "documentation": "https://docs.neuroaid.com/technical-pipeline",
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-10-24",
+        "changes": ["Initial technical pipeline API implementation"]
+      }
+    ]
+  }
+}
