@@ -6,6 +6,7 @@ import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
 import TechnicalPipeline from './components/TechnicalPipeline'
 import SpeechToText from './components/SpeechToText'
+import FeatureExtraction from './components/FeatureExtraction'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <HowItWorks />
         <TechnicalPipeline />
         <SpeechToText />
+        <FeatureExtraction />
         <CTA />
       </main>
       <Footer />
