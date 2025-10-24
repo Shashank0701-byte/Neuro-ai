@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Brain, Menu, X } from 'lucide-react'
 
 const Header = () => {
@@ -9,20 +10,20 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="bg-gradient-to-r from-primary-600 to-secondary-600 p-2 rounded-lg">
               <Brain className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl font-bold text-gray-900">NeuroAid</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
-            <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</a>
-            <a href="#technical-pipeline" className="text-gray-600 hover:text-primary-600 transition-colors">Technology</a>
-            <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+            <Link to="/" className="text-gray-600 hover:text-primary-600 transition-colors">Home</Link>
+            <Link to="/how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</Link>
+            <Link to="/technical" className="text-gray-600 hover:text-primary-600 transition-colors">Technology</Link>
+            <Link to="/speech-analysis" className="text-gray-600 hover:text-primary-600 transition-colors">Speech Analysis</Link>
+            <Link to="/feature-extraction" className="text-gray-600 hover:text-primary-600 transition-colors">Features</Link>
             <button className="btn-primary">Get Started</button>
           </nav>
 
@@ -41,11 +42,11 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4">
-              <a href="#about" className="text-gray-600 hover:text-primary-600 transition-colors">About</a>
-              <a href="#features" className="text-gray-600 hover:text-primary-600 transition-colors">Features</a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors">How It Works</a>
-              <a href="#technical-pipeline" className="text-gray-600 hover:text-primary-600 transition-colors">Technology</a>
-              <a href="#contact" className="text-gray-600 hover:text-primary-600 transition-colors">Contact</a>
+              <Link to="/" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Home</Link>
+              <Link to="/how-it-works" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>How It Works</Link>
+              <Link to="/technical" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Technology</Link>
+              <Link to="/speech-analysis" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Speech Analysis</Link>
+              <Link to="/feature-extraction" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Features</Link>
               <button className="btn-primary w-full">Get Started</button>
             </nav>
           </div>

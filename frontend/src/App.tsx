@@ -1,31 +1,29 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
-import Hero from './components/Hero'
-import ProblemGoal from './components/ProblemGoal'
-import About from './components/About'
-import Features from './components/Features'
-import HowItWorks from './components/HowItWorks'
-import TechnicalPipeline from './components/TechnicalPipeline'
-import SpeechToText from './components/SpeechToText'
-import FeatureExtraction from './components/FeatureExtraction'
-import CTA from './components/CTA'
 import Footer from './components/Footer'
+import HomePage from './pages/HomePage'
+import HowItWorksPage from './pages/HowItWorksPage'
+import TechnicalPage from './pages/TechnicalPage'
+import SpeechAnalysisPage from './pages/SpeechAnalysisPage'
+import FeatureExtractionPage from './pages/FeatureExtractionPage'
+
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <Header />
-      <main>
-        <Hero />
-        <ProblemGoal />
-        <About />
-        <Features />
-        <HowItWorks />
-        <TechnicalPipeline />
-        <SpeechToText />
-        <FeatureExtraction />
-        <CTA />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/how-it-works" element={<HowItWorksPage />} />
+            <Route path="/technical" element={<TechnicalPage />} />
+            <Route path="/speech-analysis" element={<SpeechAnalysisPage />} />
+            <Route path="/feature-extraction" element={<FeatureExtractionPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   )
 }
 
