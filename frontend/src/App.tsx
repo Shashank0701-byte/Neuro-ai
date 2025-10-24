@@ -1,6 +1,6 @@
-import React from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
+import ProblemGoal from './components/ProblemGoal'
 import About from './components/About'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
@@ -12,6 +12,7 @@ function App() {
       <Header />
       <main>
         <Hero />
+        <ProblemGoal />
         <About />
         <Features />
         <HowItWorks />
