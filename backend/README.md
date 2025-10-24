@@ -7,6 +7,7 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
 - **Dynamic Content Management**: Full CRUD operations for "How It Works" section
 - **Technical Pipeline API**: Comprehensive API for pipeline module metadata and visualization
 - **Speech-to-Text API**: Audio upload, processing, and transcription with Whisper integration
+- **Feature Extraction API**: Advanced NLP analysis with spaCy/NLTK for cognitive health assessment
 - **Admin Authentication**: JWT-based authentication with role-based access control
 - **Rate Limiting**: Protection against abuse with configurable limits
 - **Data Validation**: Comprehensive input validation using Joi
@@ -18,6 +19,8 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
 
 - Node.js (v16 or higher)
 - npm or yarn
+- Python 3.8+ (for advanced NLP features)
+- pip (Python package manager)
 
 ## 🛠️ Installation
 
@@ -26,18 +29,29 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
    cd backend
    ```
 
-2. **Install dependencies:**
+2. **Install Node.js dependencies:**
    ```bash
    npm install
    ```
 
-3. **Environment setup:**
+3. **Install Python dependencies (for Feature Extraction):**
+   ```bash
+   pip install -r requirements.txt
+   
+   # Download required NLTK data
+   python -c "import nltk; nltk.download('punkt'); nltk.download('averaged_perceptron_tagger'); nltk.download('stopwords'); nltk.download('vader_lexicon'); nltk.download('maxent_ne_chunker'); nltk.download('words')"
+   
+   # Download spaCy model
+   python -m spacy download en_core_web_sm
+   ```
+
+4. **Environment setup:**
    ```bash
    cp .env.example .env
    # Edit .env with your configuration
    ```
 
-4. **Start the server:**
+5. **Start the server:**
    ```bash
    # Development mode
    npm run dev
@@ -311,6 +325,91 @@ Check Whisper service health status.
 Get supported audio formats and upload limits.
 
 **📚 Full Speech-to-Text API Documentation**: See `SPEECH_TO_TEXT_API.md`
+
+### Feature Extraction Endpoints
+
+#### POST `/feature-extraction/analyze`
+Extract comprehensive NLP features from text for cognitive health analysis.
+
+**Request (JSON):**
+```bash
+curl -X POST http://localhost:5000/api/feature-extraction/analyze \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Your text to analyze here...",
+    "options": {
+      "includeAdvanced": true,
+      "includeCognitive": true,
+      "analysisType": "comprehensive"
+    }
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Feature extraction completed successfully",
+  "data": {
+    "analysisId": "uuid-string",
+    "features": {
+      "basic": {
+        "wordCount": 25,
+        "sentenceCount": 3,
+        "typeTokenRatio": 0.84
+      },
+      "lexical": {
+        "vocabularySize": 21,
+        "lexicalDiversity": 0.84,
+        "complexWordRatio": 0.12
+      },
+      "sentiment": {
+        "sentimentScore": 2,
+        "sentimentPolarity": "positive"
+      },
+      "cognitive": {
+        "cognitiveHealthScore": 0.78,
+        "syntacticComplexity": 0.42,
+        "informationDensity": 0.64
+      }
+    },
+    "processingTime": 1.23
+  },
+  "summary": {
+    "readabilityLevel": "standard",
+    "sentimentPolarity": "positive",
+    "cognitiveHealthScore": 0.78
+  },
+  "cognitiveInsights": {
+    "overallAssessment": "good",
+    "strengths": ["Rich vocabulary usage"],
+    "recommendations": []
+  }
+}
+```
+
+#### POST `/feature-extraction/analyze-transcription/:transcriptionId`
+Extract features from existing speech transcription with timing data.
+
+#### GET `/feature-extraction/analyses`
+Get paginated list of feature analyses.
+
+#### GET `/feature-extraction/analyses/:id`
+Get specific analysis by ID.
+
+#### POST `/feature-extraction/compare`
+Compare multiple analyses for trends and cognitive patterns.
+
+#### GET `/feature-extraction/stats`
+Get feature extraction usage statistics and cognitive health metrics.
+
+#### GET `/feature-extraction/health`
+Check NLP service health and spaCy/NLTK availability.
+
+#### GET `/feature-extraction/capabilities`
+Get available features and analysis capabilities.
+
+**📚 Full Feature Extraction API Documentation**: See `FEATURE_EXTRACTION_API.md`
 
 ## 🔒 Security Features
 
