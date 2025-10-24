@@ -18,7 +18,12 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "uuid": "^9.0.1",
-    "express-rate-limit": "^7.1.5"
+    "express-rate-limit": "^7.1.5",
+    "multer": "^1.4.5-lts.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "axios": "^1.6.2",
+    "form-data": "^4.0.0",
+    "fs-extra": "^11.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",

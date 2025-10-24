@@ -6,6 +6,7 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
 
 - **Dynamic Content Management**: Full CRUD operations for "How It Works" section
 - **Technical Pipeline API**: Comprehensive API for pipeline module metadata and visualization
+- **Speech-to-Text API**: Audio upload, processing, and transcription with Whisper integration
 - **Admin Authentication**: JWT-based authentication with role-based access control
 - **Rate Limiting**: Protection against abuse with configurable limits
 - **Data Validation**: Comprehensive input validation using Joi
@@ -59,6 +60,12 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
 | `FRONTEND_URL` | Frontend URL for CORS | `http://localhost:3000` |
 | `RATE_LIMIT_WINDOW_MS` | Rate limit window | `900000` (15 min) |
 | `RATE_LIMIT_MAX_REQUESTS` | Max requests per window | `100` |
+| `WHISPER_API_URL` | Whisper API endpoint | `http://localhost:8000` |
+| `WHISPER_API_KEY` | Whisper API key | Required for remote API |
+| `WHISPER_MODEL` | Default Whisper model | `base` |
+| `UPLOAD_MAX_SIZE` | Max file upload size | `52428800` (50MB) |
+| `UPLOAD_DIR` | Upload directory | `./uploads` |
+| `TRANSCRIPTIONS_DIR` | Transcriptions storage | `./data/transcriptions` |
 
 ## 📚 API Documentation
 
@@ -246,6 +253,64 @@ Add new module (Admin only).
 Delete specific module (Admin only).
 
 **📚 Full Technical Pipeline API Documentation**: See `TECHNICAL_PIPELINE_API.md` and `TECHNICAL_PIPELINE_README.md`
+
+### Speech-to-Text Endpoints
+
+#### POST `/speech-to-text/transcribe`
+Upload and transcribe audio files using Whisper AI.
+
+**Request (Multipart Form):**
+```bash
+curl -X POST http://localhost:5000/api/speech-to-text/transcribe \
+  -F "audio=@recording.wav" \
+  -F "language=en" \
+  -F "model=base" \
+  -F "enhanceAudio=true"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Transcription completed successfully",
+  "data": {
+    "transcriptionId": "uuid-string",
+    "text": "Transcribed text content...",
+    "language": "en",
+    "confidence": 0.95,
+    "duration": 45.2,
+    "processingTime": 3.8,
+    "wordCount": 87
+  },
+  "metadata": {
+    "fileInfo": {
+      "originalName": "recording.wav",
+      "size": 1024000,
+      "formattedSize": "1.02 MB"
+    }
+  }
+}
+```
+
+#### GET `/speech-to-text/transcriptions`
+Get paginated list of transcriptions.
+
+#### GET `/speech-to-text/transcriptions/:id`
+Get specific transcription by ID.
+
+#### GET `/speech-to-text/transcriptions/:id/export`
+Export transcription in various formats (TXT, JSON, SRT, VTT).
+
+#### GET `/speech-to-text/stats`
+Get transcription usage statistics.
+
+#### GET `/speech-to-text/health`
+Check Whisper service health status.
+
+#### GET `/speech-to-text/formats`
+Get supported audio formats and upload limits.
+
+**📚 Full Speech-to-Text API Documentation**: See `SPEECH_TO_TEXT_API.md`
 
 ## 🔒 Security Features
 

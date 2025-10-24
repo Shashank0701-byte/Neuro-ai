@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const howItWorksRoutes = require('./routes/howItWorks');
 const technicalPipelineRoutes = require('./routes/technicalPipeline');
+const speechToTextRoutes = require('./routes/speechToText');
 const authRoutes = require('./routes/auth');
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -55,6 +56,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/how-it-works', howItWorksRoutes);
 app.use('/api/technical-pipeline', technicalPipelineRoutes);
+app.use('/api/speech-to-text', speechToTextRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

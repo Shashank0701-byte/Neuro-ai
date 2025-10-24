@@ -104,6 +104,24 @@ const technicalPipelineSchema = Joi.object({
   performance: Joi.object().required()
 });
 
+// Speech-to-Text transcription options schema
+const transcriptionOptionsSchema = Joi.object({
+  language: Joi.string().min(2).max(5).optional(),
+  model: Joi.string().valid('tiny', 'base', 'small', 'medium', 'large', 'whisper-1').optional(),
+  enhanceAudio: Joi.boolean().optional(),
+  responseFormat: Joi.string().valid('json', 'text', 'srt', 'verbose_json', 'vtt').optional(),
+  temperature: Joi.number().min(0).max(1).optional()
+});
+
+// Transcription query parameters schema
+const transcriptionQuerySchema = Joi.object({
+  page: Joi.number().integer().min(1).optional(),
+  limit: Joi.number().integer().min(1).max(100).optional(),
+  status: Joi.string().valid('completed', 'failed', 'processing').optional(),
+  dateFrom: Joi.date().iso().optional(),
+  dateTo: Joi.date().iso().optional()
+});
+
 // Validate request body
 const validateBody = (schema) => {
   return (req, res, next) => {
@@ -138,6 +156,8 @@ module.exports = {
   moduleSchema,
   pipelineOverviewSchema,
   technicalPipelineSchema,
+  transcriptionOptionsSchema,
+  transcriptionQuerySchema,
   validateBody,
   validateQuery
 };
