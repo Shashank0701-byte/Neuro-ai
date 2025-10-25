@@ -8,6 +8,7 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
 - **Technical Pipeline API**: Comprehensive API for pipeline module metadata and visualization
 - **Speech-to-Text API**: Audio upload, processing, and transcription with Whisper integration
 - **Feature Extraction API**: Advanced NLP analysis with spaCy/NLTK for cognitive health assessment
+- **Cognitive Model API**: ML-powered risk scoring with confidence metrics and clinical interpretation
 - **Admin Authentication**: JWT-based authentication with role-based access control
 - **Rate Limiting**: Protection against abuse with configurable limits
 - **Data Validation**: Comprehensive input validation using Joi
@@ -410,6 +411,121 @@ Check NLP service health and spaCy/NLTK availability.
 Get available features and analysis capabilities.
 
 **📚 Full Feature Extraction API Documentation**: See `FEATURE_EXTRACTION_API.md`
+
+### Cognitive Model Endpoints
+
+#### POST `/cognitive-model/score`
+Score cognitive features using trained ML models for risk assessment.
+
+**Request (JSON):**
+```bash
+curl -X POST http://localhost:5000/api/cognitive-model/score \
+  -H "Content-Type: application/json" \
+  -d '{
+    "features": {
+      "basic": {
+        "wordCount": 150,
+        "sentenceCount": 12,
+        "typeTokenRatio": 0.75
+      },
+      "lexical": {
+        "vocabularySize": 120,
+        "lexicalDiversity": 0.8,
+        "complexWordRatio": 0.15
+      },
+      "cognitive": {
+        "cognitiveHealthScore": 0.82,
+        "syntacticComplexity": 0.65,
+        "informationDensity": 0.71,
+        "hesitationRatio": 0.03
+      }
+    },
+    "options": {
+      "includeFeatureImportance": true,
+      "includeClinicalInterpretation": true
+    }
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Cognitive features scored successfully",
+  "data": {
+    "scoringId": "uuid-string",
+    "riskScore": 0.78,
+    "confidence": 0.89,
+    "riskCategory": {
+      "level": "low",
+      "label": "Low Risk",
+      "description": "Cognitive indicators within normal ranges",
+      "color": "green"
+    },
+    "modelMetadata": {
+      "modelName": "Cognitive Health Ensemble Classifier",
+      "modelVersion": "1.0.0",
+      "modelType": "ensemble",
+      "performanceMetrics": {
+        "accuracy": 0.892,
+        "precision": 0.885,
+        "recall": 0.901,
+        "f1Score": 0.893
+      }
+    },
+    "featureImportance": {
+      "cognitiveHealthScore": 0.25,
+      "syntacticComplexity": 0.18,
+      "lexicalDiversity": 0.15,
+      "informationDensity": 0.12
+    },
+    "clinicalInterpretation": {
+      "summary": "Cognitive health indicators are within expected ranges (78% score).",
+      "clinicalSignificance": "Results suggest maintained cognitive function.",
+      "limitations": [
+        "This assessment is not a diagnostic tool",
+        "Results may be influenced by education and language background"
+      ]
+    },
+    "recommendations": {
+      "immediate": ["Continue current cognitive health practices"],
+      "shortTerm": ["Schedule routine follow-up in 6-12 months"],
+      "lifestyle": ["Maintain regular physical exercise", "Engage in cognitively stimulating activities"]
+    },
+    "qualityMetrics": {
+      "featureCompleteness": 0.95,
+      "dataQuality": {
+        "score": 0.92,
+        "recommendation": "Data quality is sufficient for analysis"
+      },
+      "modelReliability": {
+        "reliability": "high",
+        "confidence": 0.89
+      }
+    }
+  }
+}
+```
+
+#### POST `/cognitive-model/score-analysis/:analysisId`
+Score features from existing feature extraction analysis.
+
+#### POST `/cognitive-model/batch-score`
+Score multiple feature sets in batch (max 10 per request).
+
+#### POST `/cognitive-model/compare-scores`
+Compare multiple scoring results for trend analysis.
+
+#### GET `/cognitive-model/health`
+Check ML model service health and availability.
+
+#### GET `/cognitive-model/capabilities`
+Get model capabilities, supported features, and performance metrics.
+
+#### GET `/cognitive-model/stats`
+Get cognitive model scoring statistics and usage metrics.
+
+**📚 Full Cognitive Model API Documentation**: See `COGNITIVE_MODEL_API.md`
 
 ## 🔒 Security Features
 

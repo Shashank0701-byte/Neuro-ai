@@ -9,6 +9,7 @@ const howItWorksRoutes = require('./routes/howItWorks');
 const technicalPipelineRoutes = require('./routes/technicalPipeline');
 const speechToTextRoutes = require('./routes/speechToText');
 const featureExtractionRoutes = require('./routes/featureExtraction');
+const cognitiveModelRoutes = require('./routes/cognitiveModel');
 const authRoutes = require('./routes/auth');
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -59,6 +60,7 @@ app.use('/api/how-it-works', howItWorksRoutes);
 app.use('/api/technical-pipeline', technicalPipelineRoutes);
 app.use('/api/speech-to-text', speechToTextRoutes);
 app.use('/api/feature-extraction', featureExtractionRoutes);
+app.use('/api/cognitive-model', cognitiveModelRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
