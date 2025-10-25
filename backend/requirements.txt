@@ -22,6 +22,12 @@ unidecode>=1.3.6
 # Performance optimization
 cython>=0.29.0
 
+# SHAP explainability and visualization
+shap>=0.42.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
 # Download required NLTK data after installation:
 # python -m nltk.downloader punkt averaged_perceptron_tagger stopwords vader_lexicon maxent_ne_chunker words
 

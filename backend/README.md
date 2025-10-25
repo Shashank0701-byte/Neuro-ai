@@ -9,6 +9,7 @@ A robust Node.js/Express backend API for managing dynamic content in the NeuroAi
 - **Speech-to-Text API**: Audio upload, processing, and transcription with Whisper integration
 - **Feature Extraction API**: Advanced NLP analysis with spaCy/NLTK for cognitive health assessment
 - **Cognitive Model API**: ML-powered risk scoring with confidence metrics and clinical interpretation
+- **Explainability API**: SHAP-based model interpretability with visualizations and clinical insights
 - **Admin Authentication**: JWT-based authentication with role-based access control
 - **Rate Limiting**: Protection against abuse with configurable limits
 - **Data Validation**: Comprehensive input validation using Joi
@@ -526,6 +527,151 @@ Get model capabilities, supported features, and performance metrics.
 Get cognitive model scoring statistics and usage metrics.
 
 **📚 Full Cognitive Model API Documentation**: See `COGNITIVE_MODEL_API.md`
+
+### Explainability Endpoints
+
+#### POST `/explainability/explain`
+Generate SHAP explanations for cognitive model predictions with visualizations.
+
+**Request (JSON):**
+```bash
+curl -X POST http://localhost:5000/api/explainability/explain \
+  -H "Content-Type: application/json" \
+  -d '{
+    "features": {
+      "basic": {
+        "wordCount": 150,
+        "sentenceCount": 12,
+        "typeTokenRatio": 0.75
+      },
+      "lexical": {
+        "vocabularySize": 120,
+        "lexicalDiversity": 0.8,
+        "complexWordRatio": 0.15
+      },
+      "cognitive": {
+        "cognitiveHealthScore": 0.82,
+        "syntacticComplexity": 0.65,
+        "informationDensity": 0.71,
+        "hesitationRatio": 0.03
+      }
+    },
+    "prediction": {
+      "scoringId": "uuid-string",
+      "riskScore": 0.78,
+      "confidence": 0.89
+    },
+    "options": {
+      "types": ["waterfall", "bar", "force"],
+      "includeVisualizations": true
+    }
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "SHAP explanation generated successfully",
+  "data": {
+    "explanationId": "uuid-string",
+    "shapValues": {
+      "cognitiveHealthScore": 0.156,
+      "lexicalDiversity": 0.089,
+      "syntacticComplexity": 0.067,
+      "hesitationRatio": -0.023
+    },
+    "baseValue": 0.5,
+    "featureAttributions": {
+      "cognitiveHealthScore": {
+        "shapValue": 0.156,
+        "direction": "positive",
+        "percentageContribution": 32.4,
+        "interpretation": "This feature significantly increased the cognitive health score"
+      }
+    },
+    "visualizations": {
+      "waterfall": {
+        "type": "waterfall",
+        "name": "Waterfall Plot",
+        "filename": "waterfall_20241025_123456_7890.png",
+        "url": "/api/explainability/visualization/waterfall_20241025_123456_7890.png",
+        "status": "ready"
+      }
+    },
+    "insights": {
+      "topPositiveFeatures": [
+        {
+          "feature": "cognitiveHealthScore",
+          "shapValue": 0.156,
+          "contribution": 32.4,
+          "interpretation": "Strong positive impact on prediction"
+        }
+      ],
+      "keyFindings": [
+        {
+          "type": "primary_driver",
+          "message": "cognitiveHealthScore was the most influential factor",
+          "importance": "high"
+        }
+      ],
+      "clinicalRelevance": [
+        {
+          "domain": "cognitive_function",
+          "message": "Cognitive health score supported the overall assessment",
+          "clinicalSignificance": "high",
+          "recommendation": "Cognitive function appears preserved"
+        }
+      ]
+    },
+    "interpretability": {
+      "globalImportance": {
+        "cognitiveHealthScore": {
+          "meanAbsoluteShap": 0.156,
+          "percentageContribution": 32.4,
+          "rank": 1
+        }
+      },
+      "localExplanation": {
+        "summary": "This prediction was primarily influenced by cognitiveHealthScore, lexicalDiversity, syntacticComplexity",
+        "featureValues": {
+          "cognitiveHealthScore": {
+            "value": 0.82,
+            "shapValue": 0.156,
+            "impact": "positive"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### POST `/explainability/score-and-explain`
+Score features and generate explanation in a single integrated request.
+
+#### POST `/explainability/explain-score/:scoringId`
+Generate explanation for existing cognitive model scoring result.
+
+#### POST `/explainability/compare`
+Compare SHAP explanations across multiple predictions for trend analysis.
+
+#### GET `/explainability/explanation/:explanationId`
+Retrieve previously generated explanation by ID.
+
+#### GET `/explainability/visualization/:filename`
+Serve SHAP visualization files (PNG, SVG, HTML formats).
+
+#### GET `/explainability/health`
+Check SHAP service health and Python environment status.
+
+#### GET `/explainability/capabilities`
+Get explainability service capabilities and supported visualization types.
+
+#### GET `/explainability/stats`
+Get explainability usage statistics and feature importance analytics.
+
+**📚 Full Explainability API Documentation**: See `EXPLAINABILITY_API.md`
 
 ## 🔒 Security Features
 
