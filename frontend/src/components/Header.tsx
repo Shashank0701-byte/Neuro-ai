@@ -24,6 +24,7 @@ const Header = () => {
             <Link to="/technical" className="text-gray-600 hover:text-primary-600 transition-colors">Technology</Link>
             <Link to="/speech-analysis" className="text-gray-600 hover:text-primary-600 transition-colors">Speech Analysis</Link>
             <Link to="/feature-extraction" className="text-gray-600 hover:text-primary-600 transition-colors">Features</Link>
+            <Link to="/cognitive-scoring" className="text-gray-600 hover:text-primary-600 transition-colors">Assessment</Link>
             <button className="btn-primary">Get Started</button>
           </nav>
 
@@ -47,6 +48,7 @@ const Header = () => {
               <Link to="/technical" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Technology</Link>
               <Link to="/speech-analysis" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Speech Analysis</Link>
               <Link to="/feature-extraction" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Features</Link>
+              <Link to="/cognitive-scoring" className="text-gray-600 hover:text-primary-600 transition-colors" onClick={() => setIsMenuOpen(false)}>Assessment</Link>
               <button className="btn-primary w-full">Get Started</button>
             </nav>
           </div>

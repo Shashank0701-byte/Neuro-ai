@@ -6,6 +6,7 @@ import HowItWorksPage from './pages/HowItWorksPage'
 import TechnicalPage from './pages/TechnicalPage'
 import SpeechAnalysisPage from './pages/SpeechAnalysisPage'
 import FeatureExtractionPage from './pages/FeatureExtractionPage'
+import CognitiveScoringPage from './pages/CognitiveScoringPage'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/technical" element={<TechnicalPage />} />
             <Route path="/speech-analysis" element={<SpeechAnalysisPage />} />
             <Route path="/feature-extraction" element={<FeatureExtractionPage />} />
+            <Route path="/cognitive-scoring" element={<CognitiveScoringPage />} />
           </Routes>
         </main>
         <Footer />
